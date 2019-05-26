@@ -1,179 +1,86 @@
-# Dillinger
+Crystal
+===========
 
-[![N|Solid](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Crystal_language_logo.svg/1200px-Crystal_language_logo.svg.png)](https://nodesource.com/products/nsolid)
+Crystal és un llenguatge de programació nascut de voler un llenguatge fàcil d'escriure, entendre, i visualment atractiu, a la vegada que ràpid. Així doncs, agafant com a principals referents, Ruby per la seva alta productivitat dels programadors degut a la facilitat d'escriptura i entesa, i C pel seu alt rendiment i eficiencia.
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+Paradigma de programació
+=============
+Crystal és un llenguatge caracteritzat per:
+- Un **tipat fort i estàtic**, gràcies a l'ús d'un compilador per a generar binaris i un algorisme d'inferencia de tipus
+- Una programació **orientada a objectes**, on qualsevol component de Crystal és un objecte que sempre compleix amb:
+	- Tenir un tipus
+	- Respondre a métodes
+- Un estil d'escriptura imperatiu, on gràcies a la herència de Ruby, resulta en codi llegible i molt semblant a llenguatges d'scripting
 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+Sistema de Tipus
+-------
+Una de les característiques de Crystal és que implementa un sistema de tipat on s'emplea un algorisme que infereix els tipus de cada objecte en temps de compilació. La herència de llenguatges llegibles resulta en la manca de necessitat de declarar els tipus de variables. En altres llenguatges, el programa s'executava i, en cas de trobar un error de tipus, paraba la execució llençant una excepció.
 
+Crystal s'aprofita de utilitzar un compilador per, en temps de compilador, inferir el tipus o els possibles tipus que pot tenir una variable, i evaluar la possibilitat d'errors.
 
+Una consequencia que ha convertit en capabilitat remarcable es la no existencia d'errors de tipus Nil. En Crystal, cap tipus pot ser Nil, i les variables que poden prendre per valor Nil resulten amb un tipus que és la unió dels altres tipus que pot prendre i Nil. D'aquesta manera, el compilador pot saber si una operació donada pot generar excepcions de tipus, i alertar d'aquestes.
 
-# New Features!
-
-  - Import a HTML file and watch it magically convert to Markdown
-  - Drag and drop images (requires your Dropbox account be linked)
-
-
-You can also:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
-
-Markdown is a lightweight markup language based on the formatting conventions that people naturally use in email.  As [John Gruber] writes on the [Markdown site][df1]
-
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
-
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
-
-### Tech
-
-Dillinger uses a number of open source projects to work properly:
-
-* [AngularJS] - HTML enhanced for web apps!
-* [Ace Editor] - awesome web-based text editor
-* [markdown-it] - Markdown parser done right. Fast and easy to extend.
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk]
-* [Gulp] - the streaming build system
-* [Breakdance](http://breakdance.io) - HTML to Markdown converter
-* [jQuery] - duh
-
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
-
-### Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-$ cd dillinger
-$ npm install -d
-$ node app
+```Crystal
+# Crystal
+condicio = true
+if condicio
+  i = 1
+else
+  i = "a"
+end
+print "La variable i té valor " + i
+-----------------------------------------------
+Output:
+Error in testing.cr:9 no overload matches ‘String#+’ with type (Int32 | String)
 ```
+En aquest code snippet es veu l'error generat pel compilador de Crystal, on detecta la possibilitat de que la variable i sigui un Int32, i per consequent, la funció print no es pugui executar correctament degut a un error de tipus.
 
-For production environments...
-
-```sh
-$ npm install --production
-$ NODE_ENV=production node app
+```Python
+# Python
+condicio = true
+if condicio:
+  i = 1
+else:
+  i = "a"
+print("La variable i té valor " + i)
+-----------------------------------------------
+Output:
+condicio = true
+TypeError: must be str, not int
+condicio = false
+La variable i té valor a
 ```
+En canvi, en un llenguatge com Python, aquest error només es genera quan en una execució es compleix que i té un valor que provoca error de tipus en la funció print.
 
-### Plugins
+Tot i així, es pot observar que el codi de Crystal resulta força similar al de Python, amb l'avantatge de tenir més seguretat de tipus.
 
-Dillinger is currently extended with the following plugins. Instructions on how to use them in your own application are linked below.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| Github | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+Llenguatges similars
+====================
 
 
-### Development
+## Bibliografia
 
-Want to contribute? Great!
+H. Wickham, *Advanced R*
+Souce: <http://adv-r.had.co.nz/>
 
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
+*Statistics with R*. Source: <http://zoonek2.free.fr/UNIX/48_R/all.html>
 
-Open your favorite Terminal and run these commands.
+L. Lamport, *LATEX: a document preparation system: user’s guide and
+reference manual* (Addison-Wesley Pub. Co., cop. 1994)
 
-First Tab:
-```sh
-$ node app
-```
+*An introduction to R* (W. N. Venables, D. M. Smith and the R Core Team)
+Source:<https://cran.r-project.org/doc/manuals/R-intro.pdf>
 
-Second Tab:
-```sh
-$ gulp watch
-```
+*What is R programming used for?*
+Source: <https://www.quora.com/What-is-R-programming-used-for>
 
-(optional) Third:
-```sh
-$ karma test
-```
-#### Building for source
-For production release:
-```sh
-$ gulp build --prod
-```
-Generating pre-built zip archives for distribution:
-```sh
-$ gulp build dist --prod
-```
-### Docker
-Dillinger is very easy to install and deploy in a Docker container.
+*R, llenguatge de programació*.  Source:
+<https://ca.wikipedia.org/wiki/R_llenguatgeprogramacio>
 
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
+*R, Docs*. Source:(https://cran.r-project.org/doc/manuals/r-release/R-lang.html)
 
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
+*Apply, lapply, sapply functions in R*,
+ Source:<https://www.r-bloggers.com/apply-lapply-rapply-sapply-functions-in-r/>
 
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
-```
-
-Verify the deployment by navigating to your server address in your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
-
-#### Kubernetes + Google Cloud
-
-See [KUBERNETES.md](https://github.com/joemccann/dillinger/blob/master/KUBERNETES.md)
-
-
-### Todos
-
- - Write MORE Tests
- - Add Night Mode
-
-License
-----
-
-MIT
-
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+*R Classes and Objects*,  Source:
+<https://www.datamentor.io/r-programming/object-class-introduction/>
